@@ -92,6 +92,8 @@ fun refreshCache() {
         }
     }
 
+</details>    
+
 ### 5. 코사인 유사도 계산 로직
   ㄱ. 분자 = v1, v2의 동일한 index 곱의 합
   ㄴ. 분모(루트)n = vn의 모든 인수 제곱의 합
