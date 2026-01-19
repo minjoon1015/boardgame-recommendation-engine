@@ -28,9 +28,6 @@
 
 ### 1. 카테고리 enum 선언
 - find 함수를 통해 한글과 내부 상수 간의 매핑 처리
-
-<details>
-<summary>여기를 클릭하여 전체 코드 보기</summary>
 ```kotlin
 enum class BoardGameCategory(val displayName: String) {
     STRATEGY("전략"),
@@ -48,14 +45,10 @@ enum class BoardGameCategory(val displayName: String) {
 }
 ```
 
-</details>
-
 ### 2. 보드게임 데이터 벡터화 로직
 - 카테고리의 경우 [전략, 가족, 추리] -> [1, 0, 0, 1] 와 같은 형태로 변환
 - 필드 값 모든 수치를 0~1 범위로 변환하여 데이터 정규화 후 일차원 배열 생성
 
-<details>
-<summary>여기를 클릭하여 전체 코드 보기</summary>
 ```kotlin
 fun createGameVector(game: GameEntity) : List<Double> {
     val allCategory = BoardGameCategory.entries
@@ -73,8 +66,6 @@ fun createGameVector(game: GameEntity) : List<Double> {
 }
 ```
 
-</details>
-
 ### 3. 전역 변수 선언
 - spring의 Bean의 경우 싱글톤 객체 -> 캐싱을 위해 전역 변수 선언
 - HashMap의 경우 멀티 스레드가 전부 다 접근이 가능하므로 동시성 문제 발생
@@ -87,8 +78,7 @@ private val vectorCache = ConcurrentHashMap<Long, List<Double>>()
 
 ### 4. 전체 데이터 벡터화 캐싱
 
-<details>
-<summary>여기를 클릭하여 전체 코드 보기</summary>
+
 ```kotlin
 fun refreshCache() {
     val games: List<GameEntity> = boardGameRepository.findAll()
@@ -99,15 +89,11 @@ fun refreshCache() {
 }
 ```
 
-</details>
-
 ### 5. 코사인 유사도 계산 로직
 - 분자 = v1, v2의 동일한 index 곱의 합
 - 분모(루트)n = vn의 모든 인수 제곱의 합
 - 분자 / (분모1 * 분모2)
 
-<details>
-<summary>여기를 클릭하여 전체 코드 보기</summary>
 ```kotlin
 fun calculateCosineSimilarity(v1: List<Double>, v2: List<Double>) : Double {
     var dotProduct = 0.0
@@ -125,13 +111,9 @@ fun calculateCosineSimilarity(v1: List<Double>, v2: List<Double>) : Double {
 }
 ```
 
-</details>
-
 ### 6. 가중치 세팅
 - options: List<GameOptions> 옵션 리스트를 받아와서 해당 리스트에 해당하는 값들에 대해서 가중치 부여
 
-<details>
-<summary>여기를 클릭하여 전체 코드 보기</summary>
 ```kotlin
 fun createGameWeightVector(game: GameEntity, options: List<GameOptions>) : List<Double> {
     val allCategory = BoardGameCategory.entries
@@ -165,5 +147,3 @@ fun createGameWeightVector(game: GameEntity, options: List<GameOptions>) : List<
     return categoryValue + nomNumber
 }
 ```
-
-</details>
